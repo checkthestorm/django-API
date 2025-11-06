@@ -1,4 +1,5 @@
-
+import dj_database_url
+from decouple import config
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -80,20 +81,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
+
 
 
 # Password validation
